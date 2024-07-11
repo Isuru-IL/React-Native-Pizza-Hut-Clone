@@ -1,4 +1,5 @@
 import LogIn from "@/components/pages/LogIn";
+import SignUp from "@/components/pages/SignUp";
 import { Text, View } from "react-native";
 
 export default function Index() {
@@ -12,6 +13,6 @@ export default function Index() {
     // >
     //   <Text>Edit app/index.tsx to edit this screen.</Text>
     // </View>
-    <LogIn/>
+    <SignUp/>
   );
 }

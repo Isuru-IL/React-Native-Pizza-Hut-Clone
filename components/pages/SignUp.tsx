@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, StyleSheet, ImageBackground, Pressable, Image } from 'react-native';
 import { Link } from "expo-router";
 
-export default function LogIn() {
+export default function SignUp() {
     return (
         <ImageBackground 
             source={require('../../assets/images/pizza-hut/background-img.jpg')} 
@@ -16,27 +16,30 @@ export default function LogIn() {
             </View>
             <View style={styles.container}>
                 <View style={styles.overlay}>
-                    <Text style={styles.logInTxt}>LET'S START YOUR ORDER</Text>
+                    <Text style={styles.signUpTxt}>CREATE YOUR ACCOUNT</Text>
                     <View style={styles.inputContainer}>
                         <TextInput placeholder="Username" placeholderTextColor="#0d0d0d" style={styles.input} />
                     </View>
                     <View style={styles.inputContainer}>
+                        <TextInput placeholder="Email" placeholderTextColor="#0d0d0d" style={styles.input} />
+                    </View>
+                    <View style={styles.inputContainer}>
                         <TextInput placeholder="Password" placeholderTextColor="#0d0d0d" secureTextEntry style={styles.input} />
                     </View>
-                    <Pressable style={styles.loginButton}>
-                        <Link href="/Home" style={styles.loginButtonText}>LOGIN</Link>
-                    </Pressable>
-                    <Pressable style={styles.forgotPasswordContainer}>
-                        <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                    <View style={styles.inputContainer}>
+                        <TextInput placeholder="Confirm Password" placeholderTextColor="#0d0d0d" secureTextEntry style={styles.input} />
+                    </View>
+                    <Pressable style={styles.signUpButton}>
+                        <Link href="/Home" style={styles.signUpButtonText}>SIGN UP</Link>
                     </Pressable>
                     <Pressable style={styles.googleButton}>
                         <Image 
                             source={require('../../assets/images/pizza-hut/google-logo.png')} 
                             style={styles.googleLogo}
                         />
-                        <Text style={styles.googleButtonText}>Log in with Google</Text>
+                        <Text style={styles.googleButtonText}>Sign up with Google</Text>
                     </Pressable>
-                    <Text style={styles.signUpText}>Don’t have an account? <Text style={styles.signUpLink}>Sign Up</Text></Text>
+                    <Text style={styles.logInText}>Already have an account? <Text style={styles.logInLink}>Log In</Text></Text>
                 </View>
             </View>
         </ImageBackground>
@@ -75,7 +78,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
     },
-    logInTxt: {
+    signUpTxt: {
         fontSize: 15,
         marginBottom: 20,
         color: '#0d0d0d',
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
         flex: 1,
         color: '#0d0d0d',
     },
-    loginButton: {
+    signUpButton: {
         width: 150,
         height: 40,
         backgroundColor: '#e50914',
@@ -106,17 +109,10 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginVertical: 10,
     },
-    loginButtonText: {
+    signUpButtonText: {
         color: '#fff',
         fontSize: 18,
         fontWeight: 'bold',
-    },
-    forgotPasswordContainer: {
-        marginBottom: 20,
-    },
-    forgotPasswordText: {
-        color: '#0d0d0d',
-        textDecorationLine: 'underline',
     },
     googleButton: {
         flexDirection: 'row',
@@ -129,7 +125,7 @@ const styles = StyleSheet.create({
         padding: 10,
         width: 250,
         marginBottom: 5,
-        marginTop: 5
+        marginTop: 5,
     },
     googleLogo: {
         width: 20,
@@ -140,13 +136,12 @@ const styles = StyleSheet.create({
         color: '#0d0d0d',
         fontSize: 16,
     },
-    signUpText: {
+    logInText: {
         color: '#0d0d0d',
         marginTop: 0,
     },
-    signUpLink: {
+    logInLink: {
         color: '#e50914',
         fontWeight: 'bold',
     },
 });
-
