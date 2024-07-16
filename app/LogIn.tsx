@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet, ImageBackground, Pressable, Image } from 'react-native';
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 
 export default function LogIn() {
     return (
         <ImageBackground 
-            source={require('../../assets/images/pizza-hut/background-img.jpg')} 
+            source={require('../assets/images/pizza-hut/background-img.jpg')} 
             style={styles.background}
         >
             <View style={styles.header}>
                 <Image 
-                    source={require('../../assets/images/pizza-hut/pizza-hut-logo.png')} 
+                    source={require('../assets/images/pizza-hut/pizza-hut-logo.png')} 
                     style={styles.logo}
                 />
             </View>
@@ -23,20 +23,20 @@ export default function LogIn() {
                     <View style={styles.inputContainer}>
                         <TextInput placeholder="Password" placeholderTextColor="#0d0d0d" secureTextEntry style={styles.input} />
                     </View>
-                    <Pressable style={styles.loginButton}>
-                        <Link href="/Home" style={styles.loginButtonText}>LOGIN</Link>
+                    <Pressable style={styles.loginButton} onPress={()=> router.push("/(tabs)")}>
+                        <Text style={styles.loginButtonText}>LOGIN</Text>
                     </Pressable>
                     <Pressable style={styles.forgotPasswordContainer}>
                         <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
                     </Pressable>
                     <Pressable style={styles.googleButton}>
                         <Image 
-                            source={require('../../assets/images/pizza-hut/google-logo.png')} 
+                            source={require('../assets/images/pizza-hut/google-logo.png')} 
                             style={styles.googleLogo}
                         />
                         <Text style={styles.googleButtonText}>Log in with Google</Text>
                     </Pressable>
-                    <Text style={styles.signUpText}>Don’t have an account? <Text style={styles.signUpLink}>Sign Up</Text></Text>
+                    <Text style={styles.signUpText}>Don’t have an account? <Text style={styles.signUpLink} onPress={()=> router.push("/SignUp")}>Sign Up</Text></Text>
                 </View>
             </View>
         </ImageBackground>

@@ -1,18 +1,11 @@
-import LogIn from "@/components/pages/LogIn";
-import SignUp from "@/components/pages/SignUp";
+import LogIn from "@/app/LogIn";
+import SignUp from "@/app/SignUp";
 import { Text, View } from "react-native";
+import { Link } from 'expo-router';
 
 export default function Index() {
   return (
-    // <View
-    //   style={{
-    //     flex: 1,
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    //   }}
-    // >
-    //   <Text>Edit app/index.tsx to edit this screen.</Text>
-    // </View>
-    <SignUp/>
+    <LogIn/>
+    // <SignUp/>
   );
 }
