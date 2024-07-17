@@ -9,7 +9,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           headerShown:false,
-          tabBarIcon: ({ color }) => <MaterialIcons size={28} name="home" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons size={26} name="home" color={color} />,
         }}
       />
       <Tabs.Screen
@@ -17,7 +17,7 @@ export default function TabLayout() {
         options={{
           title: 'Pizzas',
           headerShown:false,
-          tabBarIcon: ({ color }) => <MaterialIcons size={28} name="local-pizza" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons size={26} name="local-pizza" color={color} />,
         }}
       />
       <Tabs.Screen
@@ -25,7 +25,7 @@ export default function TabLayout() {
         options={{
           title: 'Melts',
           headerShown:false,
-          tabBarIcon: ({ color }) => <MaterialIcons size={28} name="whatshot" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons size={26} name="whatshot" color={color} />,
         }}
       />
       <Tabs.Screen
@@ -33,7 +33,7 @@ export default function TabLayout() {
         options={{
           title: 'Desserts',
           headerShown:false,
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons size={28} name="cupcake" color={color}/>,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons size={26} name="cupcake" color={color}/>,
         }}
       />
       {/* <Tabs.Screen

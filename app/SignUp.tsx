@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, ImageBackground, Pressable, Image, Button } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ImageBackground, Pressable, Image, TouchableOpacity } from 'react-native';
 import { router } from 'expo-router';
 
 export default function SignUp() {
@@ -29,9 +29,12 @@ export default function SignUp() {
                     <View style={styles.inputContainer}>
                         <TextInput placeholder="Confirm Password" placeholderTextColor="#0d0d0d" secureTextEntry style={styles.input} />
                     </View>
-                    <Pressable style={styles.signUpButton} onPress={() => router.push('/LogIn')}>
+                    {/* <Pressable style={styles.signUpButton} onPress={() => router.push('/LogIn')}>
                         <Text style={styles.signUpButtonText}>SIGN UP</Text>
-                    </Pressable>
+                    </Pressable> */}
+                    <TouchableOpacity style={styles.button} onPress={()=> router.push("/LogIn")}>
+                        <Text style={styles.buttonText}>REGISTER</Text>
+                    </TouchableOpacity>
                     <Pressable style={styles.googleButton}>
                         <Image 
                             source={require('../assets/images/pizza-hut/google-logo.png')} 
@@ -56,23 +59,23 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        width: '85%'
     },
     header: {
         width: '100%',
-        height: 95,
+        height: 90,
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'flex-start',
     },
     logo: {
-        marginTop: 30,
-        marginLeft: 10,
-        width: 100,
-        height: 50,
+        marginTop: '8%',
+        marginLeft: 40,
+        width: 120,
         resizeMode: 'contain',
     },
     overlay: {
-        width: 300,
+        width: '100%',
         padding: 20,
         backgroundColor: '#fff',
         borderRadius: 10,
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
         color: '#0d0d0d',
     },
     signUpButton: {
-        width: 150,
+        width: '100%',
         height: 40,
         backgroundColor: '#e50914',
         justifyContent: 'center',
@@ -141,7 +144,22 @@ const styles = StyleSheet.create({
         marginTop: 0,
     },
     logInLink: {
-        color: '#e50914',
-        fontWeight: 'bold',
+        color: '#0a8020',
+        fontWeight: '500',
     },
+    button: {
+        width: '100%',
+        height: 40,
+        backgroundColor: '#0a8020',
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+      },
+      buttonText: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: '500',
+        textAlign: 'center'
+      },
 });
