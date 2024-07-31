@@ -1,11 +1,77 @@
-import { View, Text, Image, ImageBackground, StyleSheet, ScrollView, Button, TouchableOpacity } from 'react-native';
+import { View, Text, Image, ImageBackground, StyleSheet, FlatList, TouchableOpacity, ImageSourcePropType } from 'react-native';
 import React, {useState} from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { router } from 'expo-router';
 
+interface Melt {
+  id: string;
+  imgUrl: ImageSourcePropType;
+  title: string;
+  description: string;
+  price: string;
+}
+
+const DATA: Melt[] = [
+  {
+    id: 'M-0001',
+    imgUrl: require('../../assets/images/pizza-hut/melts/melts-img-01.jpg'),
+    title: 'Chilli Chicken Pizza',
+    description: 'A pizza topped with Spicy Chicken, Green Chillies, Onions & Mozzarella.',
+    price: '2,840.00',
+  },
+  {
+    id: 'M-0002',
+    imgUrl: require('../../assets/images/pizza-hut/melts/melts-img-01.jpg'),
+    title: 'Sausage Delight with Onions',
+    description: 'Chicken sausages & onions with a double layer of cheese.',
+    price: '2,840.00',
+  },
+  {
+    id: 'M-0003',
+    imgUrl: require('../../assets/images/pizza-hut/melts/melts-img-01.jpg'),
+    title: 'Cheesy Tomato with Green Chillies',
+    description: 'Rich tomato sauce base topped with cream cheese, onions, tomato, green chillies.',
+    price: '2,840.00',
+  },
+  {
+    id: 'M-0004',
+    imgUrl: require('../../assets/images/pizza-hut/melts/melts-img-01.jpg'),
+    title: 'Cheesy Onion with Green Chillies',
+    description: 'Rich tomato sauce base topped with cream cheese, onions, green chillies.',
+    price: '2,840.00',
+  }
+];
+
 export default function MeltsScreen() {
-  const [selectedSauce, setSelectedSauce] = useState('sauce');
+  const [selectedSauces, setSelectedSauces] = useState<{ [key: string]: string }>({});
+
+  const renderItem = ({ item }: { item: Melt }) => (
+    <View style={styles.pizzaCard}>
+      <Image source={item.imgUrl} style={styles.pizzaImage} />
+      <Text style={styles.pizzaTitle}>{item.title}</Text>
+      <Text style={styles.pizzaDescription}>{item.description}</Text>
+      <View style={styles.selectContainer}>
+        <Text>Select Sauce</Text>
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={selectedSauces[item.id] || 'kotchchi'}
+            style={styles.selectPickerBox}
+            onValueChange={(itemValue) => setSelectedSauces((prev) => ({
+              ...prev,
+              [item.id]: itemValue
+            }))}
+          >
+            <Picker.Item label="Cheesy Kotchchi" value="kotchchi" />
+            <Picker.Item label="Spicy Marinara" value="marinara" />
+          </Picker>
+        </View>
+      </View>
+      <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <Text style={styles.buttonText}>Add Rs. {item.price}</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
     <ImageBackground
@@ -22,101 +88,16 @@ export default function MeltsScreen() {
         </View>
       </View>
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollViewcontainer}>
-          <Text style={styles.title}>MELTS</Text>
-          <View style={styles.pizzaContainer}>
-            {/* First Row */}
-            <View style={styles.pizzaRow}>
-              <View style={styles.pizzaCard}>
-                <Image source={require('../../assets/images/pizza-hut/melts/melts-img-01.jpg')} style={styles.pizzaImage} />
-                <Text style={styles.pizzaTitle}>Chilli Chicken Pizza</Text>
-                <Text style={styles.pizzaDescription}>A pizza topped with Spicy Chicken, Green Chillies, Onions & Mozzarella.</Text>
-                <View style={styles.selectContainer}>
-                  <Text>Select Sauce</Text>
-                  <View style={styles.pickerContainer}>
-                   <Picker
-                      selectedValue={selectedSauce}
-                      style={styles.selectPickerBox}
-                      onValueChange={(itemValue) => setSelectedSauce(itemValue)}
-                    >
-                      <Picker.Item label="Cheesy Kotchchi" value="kotchchi" />
-                      <Picker.Item label="Spicy Marinara" value="marinara" />
-                    </Picker>
-                  </View>
-                </View>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
-                  <Text style={styles.buttonText}>Add    Rs. 2,840.00</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.pizzaCard}>
-                <Image source={require('../../assets/images/pizza-hut/melts/melts-img-01.jpg')} style={styles.pizzaImage} />
-                <Text style={styles.pizzaTitle}>Cheesy Onion with Green Chillies</Text>
-                <Text style={styles.pizzaDescription}>Rich tomato sauce base topped with cream cheese, onions, green chillies.</Text>
-                <View style={styles.selectContainer}>
-                  <Text>Select Sauce</Text>
-                  <View style={styles.pickerContainer}>
-                   <Picker
-                      selectedValue={selectedSauce}
-                      style={styles.selectPickerBox}
-                      onValueChange={(itemValue) => setSelectedSauce(itemValue)}
-                    >
-                      <Picker.Item label="Cheesy Kotchchi" value="kotchchi" />
-                      <Picker.Item label="Spicy Marinara" value="marinara" />
-                    </Picker>
-                  </View>
-                </View>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
-                  <Text style={styles.buttonText}>Add    Rs. 2,840.00</Text>
-                </TouchableOpacity>
-             </View>
-            </View>
-            {/* Second Row */}
-            <View style={styles.pizzaRow}>
-            <View style={styles.pizzaCard}>
-              <Image source={require('../../assets/images/pizza-hut/melts/melts-img-01.jpg')} style={styles.pizzaImage} />
-              <Text style={styles.pizzaTitle}>Cheesy Tomato with Green Chillies</Text>
-              <Text style={styles.pizzaDescription}>Rich tomato sauce base topped with cream cheese, onions, tomato, green chillies.</Text>
-              <View style={styles.selectContainer}>
-                  <Text>Select Sauce</Text>
-                  <View style={styles.pickerContainer}>
-                   <Picker
-                      selectedValue={selectedSauce}
-                      style={styles.selectPickerBox}
-                      onValueChange={(itemValue) => setSelectedSauce(itemValue)}
-                    >
-                      <Picker.Item label="Cheesy Kotchchi" value="kotchchi" />
-                      <Picker.Item label="Spicy Marinara" value="marinara" />
-                    </Picker>
-                  </View>
-                </View>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
-                  <Text style={styles.buttonText}>Add    Rs. 2,840.00</Text>
-                </TouchableOpacity>
-           </View>
-            <View style={styles.pizzaCard}>
-              <Image source={require('../../assets/images/pizza-hut/melts/melts-img-01.jpg')} style={styles.pizzaImage} />
-              <Text style={styles.pizzaTitle}>Sausage Delight with Onions</Text>
-             <Text style={styles.pizzaDescription}>Chicken sausages & onions with a double layer of cheese.</Text>
-             <View style={styles.selectContainer}>
-                  <Text>Select Sauce</Text>
-                  <View style={styles.pickerContainer}>
-                   <Picker
-                      selectedValue={selectedSauce}
-                      style={styles.selectPickerBox}
-                      onValueChange={(itemValue) => setSelectedSauce(itemValue)}
-                    >
-                      <Picker.Item label="Cheesy Kotchchi" value="kotchchi" />
-                      <Picker.Item label="Spicy Marinara" value="marinara" />
-                    </Picker>
-                  </View>
-                </View>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
-                  <Text style={styles.buttonText}>Add    Rs. 2,840.00</Text>
-                </TouchableOpacity>
-            </View>
-            </View>
-          </View>
-       </ScrollView>
+        <Text style={styles.title}>MELTS</Text>
+        <View style={styles.pizzaContainer}>
+          <FlatList
+            data={DATA}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            numColumns={2}
+            contentContainerStyle={styles.flatListContainer}
+          />
+        </View>
       </View>
     </ImageBackground>
   );
@@ -153,8 +134,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     paddingVertical: 20,
+    width: '100%'
   },
-  scrollViewcontainer:{
+  flatListContainer:{
     alignItems: 'center',
   },
   title: {
@@ -165,18 +147,14 @@ const styles = StyleSheet.create({
   pizzaContainer: {
     width: '100%',
     paddingHorizontal: 10,
-  },
-  pizzaRow:{
-    flex: 1,
-    flexDirection: 'row',
-    columnGap: 10,
-    width: '100%'
+    paddingBottom: 20,
   },
   pizzaCard: {
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 10,
     marginBottom: 20,
+    marginHorizontal: 5,
     width: '48%',
     justifyContent: 'space-around'
   },
@@ -232,3 +210,110 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
 });
+
+
+
+{/* <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollViewcontainer}>
+          <Text style={styles.title}>MELTS</Text>
+          <View style={styles.pizzaContainer}>
+            First Row
+            <View style={styles.pizzaRow}>
+              <View style={styles.pizzaCard}>
+                <Image source={require('../../assets/images/pizza-hut/melts/melts-img-01.jpg')} style={styles.pizzaImage} />
+                <Text style={styles.pizzaTitle}>Chilli Chicken Pizza</Text>
+                <Text style={styles.pizzaDescription}>A pizza topped with Spicy Chicken, Green Chillies, Onions & Mozzarella.</Text>
+                <View style={styles.selectContainer}>
+                  <Text>Select Sauce</Text>
+                  <View style={styles.pickerContainer}>
+                   <Picker
+                      selectedValue={selectedSauce}
+                      style={styles.selectPickerBox}
+                      onValueChange={(itemValue) => setSelectedSauce(itemValue)}
+                    >
+                      <Picker.Item label="Cheesy Kotchchi" value="kotchchi" />
+                      <Picker.Item label="Spicy Marinara" value="marinara" />
+                    </Picker>
+                  </View>
+                </View>
+                <TouchableOpacity style={styles.button} onPress={() => {}}>
+                  <Text style={styles.buttonText}>Add    Rs. 2,840.00</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.pizzaCard}>
+                <Image source={require('../../assets/images/pizza-hut/melts/melts-img-01.jpg')} style={styles.pizzaImage} />
+                <Text style={styles.pizzaTitle}>Cheesy Onion with Green Chillies</Text>
+                <Text style={styles.pizzaDescription}>Rich tomato sauce base topped with cream cheese, onions, green chillies.</Text>
+                <View style={styles.selectContainer}>
+                  <Text>Select Sauce</Text>
+                  <View style={styles.pickerContainer}>
+                   <Picker
+                      selectedValue={selectedSauce}
+                      style={styles.selectPickerBox}
+                      onValueChange={(itemValue) => setSelectedSauce(itemValue)}
+                    >
+                      <Picker.Item label="Cheesy Kotchchi" value="kotchchi" />
+                      <Picker.Item label="Spicy Marinara" value="marinara" />
+                    </Picker>
+                  </View>
+                </View>
+                <TouchableOpacity style={styles.button} onPress={() => {}}>
+                  <Text style={styles.buttonText}>Add    Rs. 2,840.00</Text>
+                </TouchableOpacity>
+             </View>
+            </View>
+            Second Row
+            <View style={styles.pizzaRow}>
+            <View style={styles.pizzaCard}>
+              <Image source={require('../../assets/images/pizza-hut/melts/melts-img-01.jpg')} style={styles.pizzaImage} />
+              <Text style={styles.pizzaTitle}>Cheesy Tomato with Green Chillies</Text>
+              <Text style={styles.pizzaDescription}>Rich tomato sauce base topped with cream cheese, onions, tomato, green chillies.</Text>
+              <View style={styles.selectContainer}>
+                  <Text>Select Sauce</Text>
+                  <View style={styles.pickerContainer}>
+                   <Picker
+                      selectedValue={selectedSauce}
+                      style={styles.selectPickerBox}
+                      onValueChange={(itemValue) => setSelectedSauce(itemValue)}
+                    >
+                      <Picker.Item label="Cheesy Kotchchi" value="kotchchi" />
+                      <Picker.Item label="Spicy Marinara" value="marinara" />
+                    </Picker>
+                  </View>
+                </View>
+                <TouchableOpacity style={styles.button} onPress={() => {}}>
+                  <Text style={styles.buttonText}>Add    Rs. 2,840.00</Text>
+                </TouchableOpacity>
+           </View>
+            <View style={styles.pizzaCard}>
+              <Image source={require('../../assets/images/pizza-hut/melts/melts-img-01.jpg')} style={styles.pizzaImage} />
+              <Text style={styles.pizzaTitle}>Sausage Delight with Onions</Text>
+             <Text style={styles.pizzaDescription}>Chicken sausages & onions with a double layer of cheese.</Text>
+             <View style={styles.selectContainer}>
+                  <Text>Select Sauce</Text>
+                  <View style={styles.pickerContainer}>
+                   <Picker
+                      selectedValue={selectedSauce}
+                      style={styles.selectPickerBox}
+                      onValueChange={(itemValue) => setSelectedSauce(itemValue)}
+                    >
+                      <Picker.Item label="Cheesy Kotchchi" value="kotchchi" />
+                      <Picker.Item label="Spicy Marinara" value="marinara" />
+                    </Picker>
+                  </View>
+                </View>
+                <TouchableOpacity style={styles.button} onPress={() => {}}>
+                  <Text style={styles.buttonText}>Add    Rs. 2,840.00</Text>
+                </TouchableOpacity>
+            </View>
+            </View>
+          </View>
+       </ScrollView>
+      </View> */}
+
+      // pizzaRow:{
+      //   flex: 1,
+      //   flexDirection: 'row',
+      //   columnGap: 10,
+      //   width: '100%'
+      // },

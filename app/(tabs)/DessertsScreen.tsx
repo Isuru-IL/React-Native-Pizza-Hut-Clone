@@ -1,8 +1,57 @@
-import { View, Text, Image, ImageBackground, StyleSheet, ScrollView, Button, TouchableOpacity } from 'react-native';
-import React, {useState} from 'react';
+import { View, Text, Image, ImageBackground, StyleSheet, FlatList, TouchableOpacity, ImageSourcePropType } from 'react-native';
+import React, { useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { Picker } from '@react-native-picker/picker';
 import { router } from 'expo-router';
+
+interface Dessert {
+  id: string;
+  imgUrl: ImageSourcePropType;
+  title: string;
+  description: string;
+  price: string;
+}
+
+const DATA: Dessert[] = [
+  {
+    id: 'D-0001',
+    imgUrl: require('../../assets/images/pizza-hut/desserts/dessert-img-01.jpg'),
+    title: 'Cinnamon Swirls (2pcs per portion)',
+    description: 'A soft dough rolled with sweet cinnamon butter, baked to cream cheese, topped with mozzarella.',
+    price: '470.00',
+  },
+  {
+    id: 'D-0002',
+    imgUrl: require('../../assets/images/pizza-hut/desserts/dessert-img-02.jpg'),
+    title: 'Chocolate Melt Lava Cake',
+    description: 'Soft, moist chocolate cake with a burst of thick, hot liquid chocolate inside!',
+    price: '570.00',
+  },
+  {
+    id: 'D-0003',
+    imgUrl: require('../../assets/images/pizza-hut/desserts/dessert-img-03.jpg'),
+    title: 'Chocolate Swirls (2pcs per portion)',
+    description: 'A soft dough rolled with delicious chocolate chips, baked to perfection, and topped with a chocolate Glaze.',
+    price: '570.00',
+  },
+  {
+    id: 'D-0004',
+    imgUrl: require('../../assets/images/pizza-hut/desserts/dessert-img-04.jpg'),
+    title: 'Chocolate Calzone',
+    description: 'A perfectly baked soft dough filled with chocolate chips and cream cheese, topped with mozzarella & glazed with caramel.',
+    price: '570.00',
+  }
+];
+
+const renderItem = ({ item }: { item: Dessert }) => (
+  <View style={styles.pizzaCard}>
+    <Image source={item.imgUrl} style={styles.pizzaImage} />
+    <Text style={styles.pizzaTitle}>{item.title}</Text>
+    <Text style={styles.pizzaDescription}>{item.description}</Text>
+    <TouchableOpacity style={styles.button} onPress={() => {}}>
+      <Text style={styles.buttonText}>Add    Rs. {item.price}</Text>
+    </TouchableOpacity>
+  </View>
+);
 
 export default function DessertsScreen() {
   const [selectedSauce, setSelectedSauce] = useState('sauce');
@@ -22,50 +71,16 @@ export default function DessertsScreen() {
         </View>
       </View>
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollViewcontainer}>
-          <Text style={styles.title}>DESSERTS</Text>
-          <View style={styles.pizzaContainer}>
-            {/* First Row */}
-            <View style={styles.pizzaRow}>
-              <View style={styles.pizzaCard}>
-                <Image source={require('../../assets/images/pizza-hut/desserts/dessert-img-01.jpg')} style={styles.pizzaImage} />
-                <Text style={styles.pizzaTitle}>Cinnamon Swirls (2pcs per portion)</Text>
-                <Text style={styles.pizzaDescription}>A soft dough rolled with sweet cinnamon butter, baked to cream cheese, topped with mozzarella.</Text>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
-                  <Text style={styles.buttonText}>Add    Rs. 470.00</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.pizzaCard}>
-                <Image source={require('../../assets/images/pizza-hut/desserts/dessert-img-03.jpg')} style={styles.pizzaImage} />
-                <Text style={styles.pizzaTitle}>Chocolate Swirls (2pcs per portion)</Text>
-                <Text style={styles.pizzaDescription}>A soft dough rolled with delicious chocolate chips, baked to perfection, and topped with a chocolate Glaze.</Text>
-                <TouchableOpacity style={styles.button} onPress={() => {}}>
-                  <Text style={styles.buttonText}>Add    Rs. 570.00</Text>
-                </TouchableOpacity>
-             </View>
-            </View>
-            {/* Second Row */}
-            <View style={styles.pizzaRow}>
-            <View style={styles.pizzaCard}>
-              <Image source={require('../../assets/images/pizza-hut/desserts/dessert-img-02.jpg')} style={styles.pizzaImage} />
-              <Text style={styles.pizzaTitle}>Chocolate Melt Lava Cake</Text>
-              <Text style={styles.pizzaDescription}>Soft, moist chocolate cake with a burst of thick, hot liquid chocolate inside!</Text>
-              <TouchableOpacity style={styles.button} onPress={() => {}}>
-                  <Text style={styles.buttonText}>Add    Rs. 570.00</Text>
-                </TouchableOpacity>
-           </View>
-            <View style={styles.pizzaCard}>
-              <Image source={require('../../assets/images/pizza-hut/desserts/dessert-img-04.jpg')} style={styles.pizzaImage} />
-              <Text style={styles.pizzaTitle}>Chocolate Calzone</Text>
-             <Text style={styles.pizzaDescription}>A perfectly baked soft dough filled with chocolate chips and cream cheese, topped with mozzarella & glazed with caramel.</Text>
-              {/* <Button title="Add Rs. 810.00" onPress={() => {}}/> */}
-              <TouchableOpacity style={styles.button} onPress={() => {}}>
-                <Text style={styles.buttonText}>Add    Rs. 570.00</Text>
-              </TouchableOpacity>
-            </View>
-            </View>
-          </View>
-       </ScrollView>
+        <Text style={styles.title}>DESSERTS</Text>
+        <View style={styles.pizzaContainer}>
+         <FlatList
+            data={DATA}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            numColumns={2}
+            contentContainerStyle={styles.flatListContainer}
+          />
+        </View>
       </View>
     </ImageBackground>
   );
@@ -102,8 +117,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     paddingVertical: 20,
+    width: '100%',
   },
-  scrollViewcontainer:{
+  flatListContainer: {
     alignItems: 'center',
   },
   title: {
@@ -114,6 +130,7 @@ const styles = StyleSheet.create({
   pizzaContainer: {
     width: '100%',
     paddingHorizontal: 10,
+    paddingBottom: 20,
   },
   pizzaRow:{
     flex: 1,
@@ -126,6 +143,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     marginBottom: 20,
+    marginHorizontal: 5,
     width: '48%',
     justifyContent: 'space-around'
   },
@@ -164,3 +182,54 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
 });
+
+
+{/* <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollViewcontainer}>
+          <Text style={styles.title}>DESSERTS</Text>
+          <View style={styles.pizzaContainer}>
+            First Row
+            <View style={styles.pizzaRow}>
+              <View style={styles.pizzaCard}>
+                <Image source={require('../../assets/images/pizza-hut/desserts/dessert-img-01.jpg')} style={styles.pizzaImage} />
+                <Text style={styles.pizzaTitle}>Cinnamon Swirls (2pcs per portion)</Text>
+                <Text style={styles.pizzaDescription}>A soft dough rolled with sweet cinnamon butter, baked to cream cheese, topped with mozzarella.</Text>
+                <TouchableOpacity style={styles.button} onPress={() => {}}>
+                  <Text style={styles.buttonText}>Add    Rs. 470.00</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.pizzaCard}>
+                <Image source={require('../../assets/images/pizza-hut/desserts/dessert-img-03.jpg')} style={styles.pizzaImage} />
+                <Text style={styles.pizzaTitle}>Chocolate Swirls (2pcs per portion)</Text>
+                <Text style={styles.pizzaDescription}>A soft dough rolled with delicious chocolate chips, baked to perfection, and topped with a chocolate Glaze.</Text>
+                <TouchableOpacity style={styles.button} onPress={() => {}}>
+                  <Text style={styles.buttonText}>Add    Rs. 570.00</Text>
+                </TouchableOpacity>
+             </View>
+            </View>
+            Second Row
+            <View style={styles.pizzaRow}>
+            <View style={styles.pizzaCard}>
+              <Image source={require('../../assets/images/pizza-hut/desserts/dessert-img-02.jpg')} style={styles.pizzaImage} />
+              <Text style={styles.pizzaTitle}>Chocolate Melt Lava Cake</Text>
+              <Text style={styles.pizzaDescription}>Soft, moist chocolate cake with a burst of thick, hot liquid chocolate inside!</Text>
+              <TouchableOpacity style={styles.button} onPress={() => {}}>
+                  <Text style={styles.buttonText}>Add    Rs. 570.00</Text>
+                </TouchableOpacity>
+           </View>
+            <View style={styles.pizzaCard}>
+              <Image source={require('../../assets/images/pizza-hut/desserts/dessert-img-04.jpg')} style={styles.pizzaImage} />
+              <Text style={styles.pizzaTitle}>Chocolate Calzone</Text>
+             <Text style={styles.pizzaDescription}>A perfectly baked soft dough filled with chocolate chips and cream cheese, topped with mozzarella & glazed with caramel.</Text>
+              <TouchableOpacity style={styles.button} onPress={() => {}}>
+                <Text style={styles.buttonText}>Add    Rs. 570.00</Text>
+              </TouchableOpacity>
+            </View>
+            </View>
+          </View>
+       </ScrollView>
+      </View> */}
+
+      // scrollViewcontainer:{
+      //   alignItems: 'center',
+      // },
